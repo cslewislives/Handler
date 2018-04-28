@@ -2,15 +2,12 @@ import React, {Component} from 'react';
 // import {Link} from "react-router-dom";
 import {
   Col,
-  Row,
   Container,
   Input,
   Card,
   Button,
   CardBody,
-  CardImage,
-  CardTitle,
-  CardText
+  CardImage
 } from 'mdbreact';
 import './Login.css';
 

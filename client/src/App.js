@@ -6,15 +6,15 @@ import Landing from './pages/Landing';
 import Inventory from './pages/Inventory';
 
 const App = () => (
-  <Router>
-    <div className='background'>
+  <div className='background'>
+    <Router>
       <Switch>
         <Route exact path='/' component={Login}/>
         <Route exact path='/home' component={Landing}/>
         <Route path='/inventory' component={Inventory}/>
       </Switch>
-    </div>
-  </Router>
+    </Router>
+  </div>
 )
 
 export default App;

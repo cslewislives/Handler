@@ -6,11 +6,7 @@ import {
     NavbarToggler,
     Collapse,
     NavItem,
-    NavLink,
-    Dropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem
+    NavLink
 } from 'mdbreact';
 import {BrowserRouter as Router} from 'react-router-dom';
 
@@ -53,13 +49,13 @@ class FullNav extends Component {
                     <Collapse isOpen={this.state.collapse} navbar>
                         <NavbarNav left>
                             <NavItem active>
-                                <NavLink to="#">Glassware</NavLink>
+                                <NavLink to="/inventory/glassware">Glassware</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink to="#">Silverware</NavLink>
+                                <NavLink to="/inventory/silverware">Silverware</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink to="#">Wine</NavLink>
+                                <NavLink to="/inventory/wine">Wine</NavLink>
                             </NavItem>
                         </NavbarNav>
                         <NavbarNav right>

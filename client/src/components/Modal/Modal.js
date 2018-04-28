@@ -1,7 +1,7 @@
-import React from 'react';
-import {Container, Modal, ModalBody, ModalHeader} from 'mdbreact';
+import React, {Component} from 'react';
+import {Modal, ModalBody, ModalHeader} from 'mdbreact';
 
-class ModalPage extends React.Component {
+class ModalPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -19,12 +19,14 @@ class ModalPage extends React.Component {
         });
     }
 
-    render(props) {
+    
+
+    render() {
         return (
             <Modal isOpen={this.state.modal} toggle={this.toggle} centered>
                 <ModalHeader toggle={this.toggle}>Choose an Inventory</ModalHeader>
                 <ModalBody>
-                    {props.children}
+                    {this.props.children}
                 </ModalBody>
             </Modal>
         );
