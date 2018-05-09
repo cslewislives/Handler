@@ -22,12 +22,9 @@ router.get('/dashboard', (req, res) => {
 //   });
 
 router.get('/glass', (req, res) => {
-  db.Glass.find({}).then(data => {
-    let glassObj = {
-      glasses: data
-    }
-    console.log(glassObj);
-    res.json(glassObj);
+  Glass.find({}).then(data => {
+    console.log(data);
+    res.json(data);
   }).catch(err => {
     console.log(err);
   });
@@ -41,7 +38,27 @@ router.post('/glass', (req, res) => {
     let glassObj = {
       glass: data
     }
-    res.end();
+    res.json(glassObj);
+  }).catch(err => {
+    res.json(err);
+  });
+});
+
+router.post('/glass/:id', (req, res) => {
+  let id = req.params.id;
+  console.log(req.body);
+  Glass.findOneAndUpdate({_id: id}, {total: req.body.total}).then(glass => {
+    res.json(glass)
+  }).catch(err => {
+    res.json(err);
+  });
+});
+
+router.post('/glass/:id/par', (req, res) => {
+  let id = req.params.id;
+  console.log(req.body);
+  Glass.findOneAndUpdate({_id: id}, {par: req.body.par}).then(glass => {
+    res.json(glass)
   }).catch(err => {
     res.json(err);
   });

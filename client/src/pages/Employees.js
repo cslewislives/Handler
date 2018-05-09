@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 // import {Link,} from 'react-router-dom';
-import Navbar from '../components/Navbar';
 import Modal from '../components/Modal';
-import DataTable from '../components/DataTable';
 import {
     Col,
     Container,
@@ -11,30 +9,43 @@ import {
     CardBody,
     CardTitle,
     CardText,
-    Table
+    Table,
+    Navbar,
+    NavbarBrand,
+    NavbarNav,
+    NavItem,
+    NavLink
 } from 'mdbreact';
+import GlassData from '../components/GlassData';
 
 class Employees extends Component {
 
-    render() {
+    render(props) {
 
         return (
-            <Container>
-                <Card className='mb-12'>
-                    <CardBody>
-                        <CardTitle className='text-center'>Employees</CardTitle>
-                        <CardText>
-                            <h2 className='text-center'>NEED:
-                            </h2>
-                        </CardText>
-                        <Button>Add</Button>
-                        <Button>Change Par</Button>
-                    </CardBody>
-                </Card>
-                <Col md='6'>
-                    <DataTable />
-                </Col>
-            </Container>
+            <div>
+                <Navbar color="#31334a" dark expand="md" scrolling>
+                    <NavbarBrand href='/dashboard'>
+                        <img src='/assets/images/ATL_Logotype_Sans.svg' alt='logo' height='30'/>
+                    </NavbarBrand>
+                    <NavbarNav right>
+                        <NavItem>
+                            <NavLink to='/login' onClick={this.logout}>Logout</NavLink>
+                        </NavItem>
+                    </NavbarNav>
+                </Navbar>
+                <Container>
+                    <Card className='mb-12'>
+                        <CardBody>
+                            <CardTitle className='text-center'>Employees</CardTitle>
+                            <Button>Add</Button>
+                        </CardBody>
+                    </Card>
+                    <Col md='6'>
+                        <GlassData/>
+                    </Col>
+                </Container>
+            </div>
         )
     }
 };

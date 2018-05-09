@@ -4,6 +4,9 @@ import {
     Col,
     Navbar,
     NavbarBrand,
+    NavbarNav,
+    NavItem,
+    NavLink,
     Card,
     CardBody,
     CardTitle,
@@ -48,8 +51,6 @@ class Landing extends Component {
     logout = () => {
         // deauthenticate user
         Auth.deauthenticateUser();
-        // change the current URL to / after logout
-        this.props.history.push('/login');
     }
 
     render() {
@@ -66,12 +67,15 @@ class Landing extends Component {
                         <Button color="primary" onClick={this.toggle}>Wine</Button>
                     </Link>
                 </Modal>
-                <Navbar>
-                    <NavbarBrand href='/home'>
+                <Navbar color="#31334a" dark expand="md" scrolling>
+                    <NavbarBrand href='/dashboard'>
                         <img src='/assets/images/ATL_Logotype_Sans.svg' alt='logo' height='30'/>
                     </NavbarBrand>
-                    <h2 className='welcome'>Welcome: {this.state.user.firstName}</h2>
-                    <a onClick={this.logout} >Logout</a>
+                    <NavbarNav right>
+                        <NavItem>
+                            <NavLink to='/login' onClick={this.logout}>Logout: {this.state.user.firstName}</NavLink>
+                        </NavItem>
+                    </NavbarNav>
                 </Navbar>
                 <Container>
                     <div className='card-deck'>
@@ -86,7 +90,7 @@ class Landing extends Component {
                             </Card>
                         </Col>
                         <Col md='4'>
-                            <Link to='/employees'>
+                            <Link to='/employees' >
                                 <Card className='mb-4'>
                                     <CardImage
                                         className="img-fluid"

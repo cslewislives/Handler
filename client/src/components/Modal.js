@@ -24,7 +24,7 @@ class ModalPage extends Component {
     render() {
         return (
             <Modal isOpen={this.state.modal} toggle={this.toggle} centered>
-                <ModalHeader toggle={this.toggle}>Choose an Inventory</ModalHeader>
+                <ModalHeader toggle={this.toggle}>Choose</ModalHeader>
                 <ModalBody>
                     {this.props.children}
                 </ModalBody>

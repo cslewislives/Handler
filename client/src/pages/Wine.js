@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 // import {Link,} from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Modal from '../components/Modal';
-import DataTable from '../components/DataTable';
 import {
     Container,
     Col,
@@ -11,6 +10,7 @@ import {
     CardBody,
     CardTitle
 } from 'mdbreact';
+import GlassData from '../components/GlassData';
 
 class Wine extends Component {
 
@@ -25,7 +25,7 @@ class Wine extends Component {
                     </CardBody>
                 </Card>
                 <Col md='6'>
-                    <DataTable/>
+                    <GlassData/>
                 </Col>
             </Container>
         )

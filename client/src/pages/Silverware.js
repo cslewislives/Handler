@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 // import {Link,} from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Modal from '../components/Modal';
-import DataTable from '../components/DataTable';
 import {Col, Container, Button, Card, CardBody, CardTitle, CardText} from 'mdbreact';
+import GlassData from '../components/GlassData';
 
 class Silverware extends Component {
 
@@ -23,7 +23,7 @@ class Silverware extends Component {
                     </CardBody>
                 </Card>
                 <Col md='6'>
-                    <DataTable />
+                    <GlassData />
                 </Col>
             </Container>
         )

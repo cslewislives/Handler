@@ -6,34 +6,45 @@ import {
     NavbarToggler,
     Collapse,
     NavItem,
-    NavLink
+    NavLink,
+    Button
 } from 'mdbreact';
 import {BrowserRouter as Router} from 'react-router-dom';
+import Auth from '../utils/Auth';
 
-const FullNav = props => (
+class FullNav extends Component {
 
-    <Navbar color="#31334a" dark expand="md" scrolling>
-        <NavbarBrand href='/dashboard'>
-            <img src='/assets/images/ATL_Logotype_Sans.svg' alt='logo' height='30'/>
-        </NavbarBrand>
-        <NavbarNav left>
-            <NavItem>
-                <NavLink to="/inventory/glassware">Glassware</NavLink>
-            </NavItem>
-            <NavItem>
-                <NavLink to="/inventory/silverware">Silverware</NavLink>
-            </NavItem>
-            <NavItem>
-                <NavLink to="/inventory/wine">Wine</NavLink>
-            </NavItem>
-        </NavbarNav>
-        <NavbarNav right>
-            <NavItem>
-                <a>Logout</a>
-            </NavItem>
-        </NavbarNav>
-    </Navbar>
+    logout = () => {
+        // deauthenticate user
+        Auth.deauthenticateUser();
+    }
 
-)
+    render() {
+        return (
+            <Navbar color="#31334a" dark expand="md" scrolling>
+                <NavbarBrand href='/dashboard'>
+                    <img src='/assets/images/ATL_Logotype_Sans.svg' alt='logo' height='30'/>
+                </NavbarBrand>
+                <NavbarNav left>
+                    <NavItem>
+                        <NavLink to="/inventory/glassware">Glassware</NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink to="/inventory/silverware">Silverware</NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink to="/inventory/wine">Wine</NavLink>
+                    </NavItem>
+                </NavbarNav>
+                <NavbarNav right>
+                    <NavItem>
+                        <NavLink to='/login' onClick={this.logout}>Logout</NavLink>
+                    </NavItem>
+                </NavbarNav>
+            </Navbar>
+        )
+    }
+
+}
 
 export default FullNav;

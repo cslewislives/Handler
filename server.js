@@ -41,8 +41,8 @@ passport.use('local-signup', localSignupStrategy);
 passport.use('local-login', localLoginStrategy);
 
 // pass the authenticaion checker middleware 
-const authCheckMiddleware = require('./server/middleware/auth-check'); 
-app.use('/api', authCheckMiddleware);
+// const authCheckMiddleware = require('./server/middleware/auth-check'); 
+// app.use('/api', authCheckMiddleware);
 // routes
 const authRoutes = require('./server/routes/auth');
 const apiRoutes = require('./server/routes/api');
