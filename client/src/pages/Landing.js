@@ -9,11 +9,29 @@ import {
     CardTitle,
     CardImage
 } from 'mdbreact';
-import Modal from '../../components/Modal';
+import Modal from '../components/Modal';
 import {Button} from 'mdbreact';
 import {Link} from 'react-router-dom';
+import API from '../utils/API';
+import Auth from '../utils/Auth';
 
 class Landing extends Component {
+    state = {
+        secretData: '',
+        user: {}
+    }
+
+    /**
+       * This method will be executed after initial rendering.
+       */
+    componentDidMount() {
+        API
+            .dashboard(Auth.getToken())
+            .then(res => {
+                this.setState({secretData: res.data.message, user: res.data.user});
+            })
+        console.log(this.state.secretData + ' ' + this.state.user);
+    }
 
     constructor(props) {
         super(props);
@@ -25,6 +43,13 @@ class Landing extends Component {
             .child
             .current
             .toggle();
+    }
+
+    logout = () => {
+        // deauthenticate user
+        Auth.deauthenticateUser();
+        // change the current URL to / after logout
+        this.props.history.push('/login');
     }
 
     render() {
@@ -45,7 +70,8 @@ class Landing extends Component {
                     <NavbarBrand href='/home'>
                         <img src='/assets/images/ATL_Logotype_Sans.svg' alt='logo' height='30'/>
                     </NavbarBrand>
-                    <a>Logout</a>
+                    <h2 className='welcome'>Welcome: {this.state.user.firstName}</h2>
+                    <a onClick={this.logout} >Logout</a>
                 </Navbar>
                 <Container>
                     <div className='card-deck'>
