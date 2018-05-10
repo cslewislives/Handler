@@ -3,13 +3,9 @@ import {
     Navbar,
     NavbarBrand,
     NavbarNav,
-    NavbarToggler,
-    Collapse,
     NavItem,
     NavLink,
-    Button
 } from 'mdbreact';
-import {BrowserRouter as Router} from 'react-router-dom';
 import Auth from '../utils/Auth';
 
 class FullNav extends Component {

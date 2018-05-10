@@ -1,42 +1,123 @@
 import React, {Component} from 'react';
 // import {Link,} from 'react-router-dom';
-import Navbar from '../components/Navbar';
 import Modal from '../components/Modal';
+import Jumbotron from '../components/Jumbotron';
 import {
     Col,
     Container,
     Button,
-    Card,
-    CardBody,
-    CardTitle,
-    CardText,
-    Table,
     Input,
     FormInline
 } from 'mdbreact';
 import GlassData from '../components/GlassData';
+import API from '../utils/API';
+import Auth from '../utils/Auth';
+import { ToastContainer } from "react-toastr";
 
 class Glassware extends Component {
 
     constructor(props) {
         super(props);
         this.child = React.createRef();
+        
+        this.state = {
+            glasses: [],
+            update: {
+                glass: 'Choose Glass..',
+                total: ''
+            },
+            order: []
+        }
+        this.handleChange = this.handleChange.bind(this);
+
+        this.handleUpdate = this.handleUpdate.bind(this);
     }
 
-    toggle = () => {
-        this
-            .child
-            .current
-            .toggle();
+    handleChange(event) {
+        const field = event.target.name;
+        const update = this.state.update;
+        update[field] = event.target.value;
+        this.setState({update});
+        console.log(update);
     }
+
+    handleUpdate(event) {
+        event.preventDefault();
+        if (this.state.update.glass === 'Choose Glass...') {
+            alert('Please choose a glass to update');
+        } else {
+            const token = Auth.getToken();
+            console.log(token);
+            API.updateGlass(this.state.update, token).then((res, err) => {
+                alert(`The total for ${res.data.glass} has been updated`);
+                this.loadGlass();
+                this.toggle();
+            });
+        }
+    }
+
+    componentDidMount() {
+        this.loadGlass();
+    }
+
+    loadGlass() {
+        API
+        .getGlass(Auth.getToken())
+        .then(res => {
+            this.setState({glasses: res.data});
+            console.log(this.state.glasses);
+            this.calculateMissing();
+            console.log(this.state.glasses);
+        });
+    };
+
+    calculateMissing() {
+        this.state.glasses.map((glass, i) => {
+            let state = this.state.glasses;
+            let missing = glass.par - glass.total;
+            console.log(missing);
+            if (missing < 0) {
+                missing = 0;
+                state[i].missing = missing;
+                this.setState({glasses: state});
+            } else {
+                state[i].missing = missing;
+                this.setState({glasses: state});
+            }
+        })
+        this.mustOrder();        
+    }
+
+    mustOrder() {
+        let mustOrder = this.state.glasses.filter(glass => glass.missing >= 24);
+        mustOrder.map(glass => {
+            let rounded = 24 * Math.round(glass.missing/24);
+            console.log('rounded: ', rounded);
+            let cases = rounded/24;
+            console.log('cases: ', cases);
+            this.addAlert(`Must order ${cases} cases of ${glass.glass} glasses!`)
+        })
+    }
+    
+    toggle = () => {
+        this.child.current.toggle();
+    }
+
+    addAlert (message) {
+        this.refs.container.error(message, '',  {
+            closeButton: true
+          });
+      }
+
 
     render() {
 
         return (
             <Container>
-                <Modal ref={this.child}>
-                    <form>
-                        <select className='glass-select'>
+                <ToastContainer ref="container" className="toast-top-right"/>
+                <Modal ref={this.child} title='Choose Glass to Update'>
+                    <FormInline>
+                        <select name='glass' value={this.state.update.value} onChange={this.handleChange}>
                             <option defaultValue>Choose Glass...</option>
                             <option value='Wine'>Wine</option>
                             <option value='Water'>Water</option>
@@ -45,23 +126,19 @@ class Glassware extends Component {
                             <option value='Port'>Port</option>
                             <option value='Mugs'>Mugs</option>
                         </select>
-                        <Input label='New Total' className='col-md-4' name='glass-total' />
-                        <Button>Update</Button>                        
-                    </form>
+                        <Input label='New Total' className='col-md-5' name='total' onChange={this.handleChange}/>
+                        <Button onClick={this.handleUpdate}>Update</Button>
+                    </FormInline>                   
                 </Modal>
-                <Card className='mb-12'>
-                    <CardBody>
-                        <CardTitle className='text-center'>Glassware</CardTitle>
-                        {/* <CardText> */}
-                        <h2 className='text-center'>NEED:
-                        </h2>
-                        {/* </CardText> */}
-                        <Button onClick={this.toggle}>Update</Button>
-                        <Button>Change Par</Button>
-                    </CardBody>
-                </Card>
+                <Jumbotron>
+                    <h1>Glassware</h1>                    
+                    <hr className='my-4' />
+                    <Button onClick={this.toggle}>Update</Button>
+                    <Button>Change Par</Button>
+                </Jumbotron>
                 <Col md='6'>
-                    <GlassData/>
+                    <GlassData
+                        glasses={this.state.glasses}/>
                 </Col>
             </Container>
         )

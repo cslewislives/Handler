@@ -56,7 +56,7 @@ class Landing extends Component {
     render() {
         return (
             <div>
-                <Modal ref={this.child}>
+                <Modal ref={this.child} title='Choose Inventory'>
                     <Link to='/inventory/glassware'>
                         <Button color="primary" onClick={this.toggle}>Glassware</Button>
                     </Link>

@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 // import {Link,} from 'react-router-dom';
-import Modal from '../components/Modal';
 import {
     Col,
     Container,
@@ -8,8 +7,6 @@ import {
     Card,
     CardBody,
     CardTitle,
-    CardText,
-    Table,
     Navbar,
     NavbarBrand,
     NavbarNav,

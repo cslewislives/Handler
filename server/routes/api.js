@@ -11,16 +11,6 @@ router.get('/dashboard', (req, res) => {
   });
 });
 
-// db.User.create({firstName: "Josh",
-// 	lastName: "Lewis",
-// 	username: "cslewislives",
-// 	password: "20drama09"}).then(user => {
-//     console.log('user');
-//     res.json(user);
-//   }).catch(err => {
-//     console.log(err);
-//   });
-
 router.get('/glass', (req, res) => {
   Glass.find({}).then(data => {
     console.log(data);
@@ -47,7 +37,7 @@ router.post('/glass', (req, res) => {
 router.post('/glass/:id', (req, res) => {
   let id = req.params.id;
   console.log(req.body);
-  Glass.findOneAndUpdate({_id: id}, {total: req.body.total}).then(glass => {
+  Glass.findOneAndUpdate({glass: id}, {total: req.body.total}).then(glass => {
     res.json(glass)
   }).catch(err => {
     res.json(err);
@@ -57,7 +47,7 @@ router.post('/glass/:id', (req, res) => {
 router.post('/glass/:id/par', (req, res) => {
   let id = req.params.id;
   console.log(req.body);
-  Glass.findOneAndUpdate({_id: id}, {par: req.body.par}).then(glass => {
+  Glass.findOneAndUpdate({glass: id}, {par: req.body.par}).then(glass => {
     res.json(glass)
   }).catch(err => {
     res.json(err);
