@@ -12,7 +12,7 @@ import {
 import GlassData from '../components/GlassData';
 import API from '../utils/API';
 import Auth from '../utils/Auth';
-import { ToastContainer, toast, Flip } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 class Glassware extends Component {
@@ -25,7 +25,8 @@ class Glassware extends Component {
             glasses: [],
             update: {
                 glass: 'Choose Glass..',
-                total: ''
+                total: '',
+                par: ''
             },
             order: []
         }
@@ -48,7 +49,8 @@ class Glassware extends Component {
         event.preventDefault();
         if (this.state.update.glass === 'Choose Glass...') {
             alert('Please choose a glass to update');
-        } else {
+        } 
+        else if (this.state.update.total) {
             const token = Auth.getToken();
             console.log(token);
             API.updateGlass(this.state.update, token).then((res, err) => {
@@ -60,6 +62,22 @@ class Glassware extends Component {
                         pauseOnHover: false,
                         draggable: false
                     });
+                this.loadGlass();
+                this.toggle();
+            });
+        } 
+        else if (this.state.update.par) {
+            const token = Auth.getToken();
+            console.log(token);
+            API.updatePar(this.state.update, token).then((res, err) => {
+                toast.success(`The par for ${res.data.glass} has been updated`, {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: false
+                });
                 this.loadGlass();
                 this.toggle();
             });
@@ -135,7 +153,6 @@ class Glassware extends Component {
         return (
             <Container>
                 <ToastContainer
-                    transition={Flip}
                     position="top-right"
                     autoClose={false}
                     newestOnTop={false}
@@ -156,6 +173,7 @@ class Glassware extends Component {
                             <option value='Mugs'>Mugs</option>
                         </select>
                         <Input label='New Total' className='col-md-5' name='total' onChange={this.handleChange}/>
+                        <Input label='New Par' className='col-md-5' name='par' onChange={this.handleChange}/>
                         <Button onClick={this.onUpdate}>Update</Button>
                     </FormInline>                   
                 </Modal>
@@ -163,7 +181,6 @@ class Glassware extends Component {
                     <h1>Glassware</h1>                    
                     <hr className='my-4' />
                     <Button onClick={this.toggle}>Update</Button>
-                    <Button>Change Par</Button>
                 </Jumbotron>
                 <Col md='6'>
                     <GlassData

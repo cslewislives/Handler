@@ -13,5 +13,5 @@ export default {
   updateGlass: (glassData, token) => 
      axios.post(`/api/glass/${glassData.glass}`, glassData, {headers: {Authorization: `bearer ${token}`}}),
   updatePar: (glassData, token) => 
-     axios.post(`/api/glass/${glassData.glass}`, glassData, {headers: {Authorization: `bearer ${token}`}})
+     axios.post(`/api/glass/${glassData.glass}/par`, glassData, {headers: {Authorization: `bearer ${token}`}})
 };

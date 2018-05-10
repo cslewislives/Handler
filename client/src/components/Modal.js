@@ -21,7 +21,7 @@ class ModalPage extends Component {
 
     
 
-    render(props) {
+    render() {
         return (
             <Modal isOpen={this.state.modal} toggle={this.toggle} centered>
                 <ModalHeader toggle={this.toggle}>{this.props.title}</ModalHeader>
