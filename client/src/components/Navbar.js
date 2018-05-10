@@ -34,7 +34,7 @@ class FullNav extends Component {
                 </NavbarNav>
                 <NavbarNav right>
                     <NavItem>
-                        <NavLink to='/login' onClick={this.logout}>Logout</NavLink>
+                        <NavLink to='/login' onClick={this.logout}>Logout: {this.props.firstName}</NavLink>
                     </NavItem>
                 </NavbarNav>
             </Navbar>
