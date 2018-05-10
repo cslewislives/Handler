@@ -12,7 +12,8 @@ import {
 import GlassData from '../components/GlassData';
 import API from '../utils/API';
 import Auth from '../utils/Auth';
-import { ToastContainer } from "react-toastr";
+import { ToastContainer, toast, Flip } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 class Glassware extends Component {
 
@@ -31,6 +32,8 @@ class Glassware extends Component {
         this.handleChange = this.handleChange.bind(this);
 
         this.handleUpdate = this.handleUpdate.bind(this);
+
+        this.onUpdate = this.onUpdate.bind(this);
     }
 
     handleChange(event) {
@@ -49,7 +52,14 @@ class Glassware extends Component {
             const token = Auth.getToken();
             console.log(token);
             API.updateGlass(this.state.update, token).then((res, err) => {
-                alert(`The total for ${res.data.glass} has been updated`);
+                toast.success(`The total for ${res.data.glass} has been updated`, {
+                        position: "top-center",
+                        autoClose: 3000,
+                        hideProgressBar: true,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: false
+                    });
                 this.loadGlass();
                 this.toggle();
             });
@@ -103,18 +113,37 @@ class Glassware extends Component {
         this.child.current.toggle();
     }
 
-    addAlert (message) {
-        this.refs.container.error(message, '',  {
-            closeButton: true
-          });
-      }
+    addAlert = message => {
+        toast.error(message, {
+            position: "top-right",
+            autoClose: false,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false
+        });
+    }
+
+    onUpdate(event) {
+        toast.dismiss();
+        this.handleUpdate(event);
+    }
 
 
     render() {
 
         return (
             <Container>
-                <ToastContainer ref="container" className="toast-top-right"/>
+                <ToastContainer
+                    transition={Flip}
+                    position="top-right"
+                    autoClose={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnVisibilityChange
+                    draggable={false}
+                />
                 <Modal ref={this.child} title='Choose Glass to Update'>
                     <FormInline>
                         <select name='glass' value={this.state.update.value} onChange={this.handleChange}>
@@ -127,7 +156,7 @@ class Glassware extends Component {
                             <option value='Mugs'>Mugs</option>
                         </select>
                         <Input label='New Total' className='col-md-5' name='total' onChange={this.handleChange}/>
-                        <Button onClick={this.handleUpdate}>Update</Button>
+                        <Button onClick={this.onUpdate}>Update</Button>
                     </FormInline>                   
                 </Modal>
                 <Jumbotron>
