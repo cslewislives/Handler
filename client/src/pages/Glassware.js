@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-// import {Link,} from 'react-router-dom';
 import Modal from '../components/Modal';
 import Jumbotron from '../components/Jumbotron';
 import {
@@ -14,6 +13,7 @@ import API from '../utils/API';
 import Auth from '../utils/Auth';
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 
 class Glassware extends Component {
 
@@ -50,45 +50,57 @@ class Glassware extends Component {
         if (this.state.update.glass === 'Choose Glass...') {
             alert('Please choose a glass to update');
         } 
-        else if (this.state.update.total) {
-            const token = Auth.getToken();
-            console.log(token);
-            API.updateGlass(this.state.update, token).then((res, err) => {
-                toast.success(`The total for ${res.data.glass} has been updated`, {
-                        position: "top-center",
-                        autoClose: 3000,
-                        hideProgressBar: true,
-                        closeOnClick: true,
-                        pauseOnHover: false,
-                        draggable: false
-                    });
-                this.loadGlass();
-                this.toggle();
-            });
+        else if (this.state.update.total && !this.state.update.par) {
+            this.updateTotal();
+            this.loadGlass();
+            this.toggle();
         } 
-        else if (this.state.update.par) {
-            const token = Auth.getToken();
-            console.log(token);
-            API.updatePar(this.state.update, token).then((res, err) => {
-                toast.success(`The par for ${res.data.glass} has been updated`, {
-                    position: "top-center",
-                    autoClose: 3000,
-                    hideProgressBar: true,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: false
-                });
-                this.loadGlass();
-                this.toggle();
-            });
+        else if (this.state.update.par && !this.state.update.total) {
+            this.updatePar();
+            this.loadGlass();
+            this.toggle();
+        } 
+        else if (this.state.update.total && this.state.update.par) {
+            axios.all([this.updateTotal(), this.updatePar()]);
+            this.loadGlass();
+            this.toggle();           
         }
+    }
+
+    updatePar = () => {
+        const token = Auth.getToken();
+        API.updateGlassPar(this.state.update, token).then((res, err) => {
+            toast.success(`The par for ${res.data.glass} has been updated`, {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: false
+            });
+        });
+    }
+
+    updateTotal = () => {
+        const token = Auth.getToken();
+        API.updateGlass(this.state.update, token).then((res, err) => {
+            toast.success(`The total for ${res.data.glass} has been updated`, {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: false
+            });
+            
+        });
     }
 
     componentDidMount() {
         this.loadGlass();
     }
 
-    loadGlass() {
+    loadGlass = () => {
         API
         .getGlass(Auth.getToken())
         .then(res => {
@@ -99,7 +111,7 @@ class Glassware extends Component {
         });
     };
 
-    calculateMissing() {
+    calculateMissing = () => {
         this.state.glasses.map((glass, i) => {
             let state = this.state.glasses;
             let missing = glass.par - glass.total;
@@ -116,7 +128,7 @@ class Glassware extends Component {
         this.mustOrder();        
     }
 
-    mustOrder() {
+    mustOrder = () => {
         let mustOrder = this.state.glasses.filter(glass => glass.missing >= 24);
         mustOrder.map(glass => {
             let rounded = 24 * Math.round(glass.missing/24);
@@ -165,12 +177,9 @@ class Glassware extends Component {
                     <FormInline>
                         <select name='glass' value={this.state.update.value} onChange={this.handleChange}>
                             <option defaultValue>Choose Glass...</option>
-                            <option value='Wine'>Wine</option>
-                            <option value='Water'>Water</option>
-                            <option value='Rocks'>Rocks</option>
-                            <option value='Coups'>Coups</option>
-                            <option value='Port'>Port</option>
-                            <option value='Mugs'>Mugs</option>
+                            {this.state.glasses.map(item => {
+                                return <option value={item.glass}>{item.glass}</option>
+                            })}
                         </select>
                         <Input label='New Total' className='col-md-5' name='total' onChange={this.handleChange}/>
                         <Input label='New Par' className='col-md-5' name='par' onChange={this.handleChange}/>

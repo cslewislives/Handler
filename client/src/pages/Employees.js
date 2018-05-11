@@ -13,7 +13,6 @@ import {
     NavItem,
     NavLink
 } from 'mdbreact';
-import GlassData from '../components/GlassData';
 
 class Employees extends Component {
 
@@ -39,7 +38,6 @@ class Employees extends Component {
                         </CardBody>
                     </Card>
                     <Col md='6'>
-                        <GlassData/>
                     </Col>
                 </Container>
             </div>

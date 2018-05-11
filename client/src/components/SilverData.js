@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Card, Table} from 'mdbreact';
 
-class GlassData extends Component {
+class SilverData extends Component {
 
 
     render() {
@@ -11,7 +11,7 @@ class GlassData extends Component {
                     <Table hover>
                         <thead className='mdb-color darken-3'>
                             <tr className='text-white text-center'>
-                                <th>Glass</th>
+                                <th>Silver</th>
                                 <th>Total</th>
                                 <th>Par</th>
                                 <th>Missing</th>
@@ -19,15 +19,15 @@ class GlassData extends Component {
                         </thead>
                         <tbody>
                             {this.props
-                                .glasses
-                                .map((glass, i) => (
+                                .silver
+                                .map((item, i) => (
                                     <tr key={i} className='text-center'>
-                                        <th scope='row'>{glass.glass}</th>
-                                        <td>{glass.total}
+                                        <th scope='row'>{item.silver}</th>
+                                        <td>{item.total}
                                         </td>
-                                        <td>{glass.par}
+                                        <td>{item.par}
                                         </td>
-                                        <td>{glass.missing}
+                                        <td>{item.missing}
                                         </td>
                                     </tr>
                                 ))}
@@ -39,4 +39,4 @@ class GlassData extends Component {
     }
 }
 
-export default GlassData;
+export default SilverData;
