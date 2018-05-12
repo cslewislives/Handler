@@ -1,5 +1,5 @@
 const express = require('express');
-const {Glass, User, Silverware, Wine} = require('../models');
+const {Glass, User, Silverware, Wine, Employee, Regular} = require('../models');
 
 const router = new express.Router();
 
@@ -38,7 +38,7 @@ router.post('/glass', (req, res) => {
 router.post('/glass/:id', (req, res) => {
   let id = req.params.id;
   console.log(req.body);
-  Glass.findOneAndUpdate({glass: id}, {total: req.body.total}).then(glass => {
+  Glass.findOneAndUpdate({item: id}, {total: req.body.total}).then(glass => {
     res.json(glass)
   }).catch(err => {
     res.json(err);
@@ -48,7 +48,7 @@ router.post('/glass/:id', (req, res) => {
 router.post('/glass/:id/par', (req, res) => {
   let id = req.params.id;
   console.log(req.body);
-  Glass.findOneAndUpdate({glass: id}, {par: req.body.par}).then(glass => {
+  Glass.findOneAndUpdate({item: id}, {par: req.body.par}).then(glass => {
     res.json(glass)
   }).catch(err => {
     res.json(err);
@@ -81,7 +81,7 @@ router.post('/silver', (req, res) => {
 router.post('/silver/:id', (req, res) => {
   let id = req.params.id;
   console.log(req.body);
-  Silverware.findOneAndUpdate({silver: id}, {total: req.body.total}).then(silver => {
+  Silverware.findOneAndUpdate({item: id}, {total: req.body.total}).then(silver => {
     res.json(silver)
   }).catch(err => {
     res.json(err);
@@ -91,16 +91,32 @@ router.post('/silver/:id', (req, res) => {
 router.post('/silver/:id/par', (req, res) => {
   let id = req.params.id;
   console.log(req.body);
-  Silverware.findOneAndUpdate({silver: id}, {par: req.body.par}).then(item => {
+  Silverware.findOneAndUpdate({item: id}, {par: req.body.par}).then(item => {
     res.json(item)
   }).catch(err => {
     res.json(err);
   });
 });
 
+router.get('/wine', (req, res) => {
+  Wine.find({}).then(data => {
+    console.log(data);
+    res.json(data);
+  }).catch(err => {
+    console.log(err);
+  });
+});
+
 router.post('/wine', (req, res) => {
   console.log(req.body)
-  let wine = new Wine(req.body)
+  let {item, total, distributor} = req.body;
+  let newWine = {
+    item: item,
+    total: total,
+    distributor: distributor,
+    par: 6
+  }
+  let wine = new Wine(newWine);
   console.log(wine);
   Wine.create(wine).then(wine => {
     let wineObj = {
@@ -115,7 +131,7 @@ router.post('/wine', (req, res) => {
 router.post('/wine/:id', (req, res) => {
   let id = req.params.id;
   console.log(req.body);
-  Wine.findOneAndUpdate({wine: id}, {total: req.body.total}).then(wine => {
+  Wine.findOneAndUpdate({item: id}, {total: req.body.total}).then(wine => {
     res.json(wine)
   }).catch(err => {
     res.json(err);
@@ -125,8 +141,54 @@ router.post('/wine/:id', (req, res) => {
 router.post('/wine/:id/par', (req, res) => {
   let id = req.params.id;
   console.log(req.body);
-  Wine.findOneAndUpdate({wine: id}, {par: req.body.par}).then(item => {
+  Wine.findOneAndUpdate({item: id}, {par: req.body.par}).then(item => {
     res.json(item)
+  }).catch(err => {
+    res.json(err);
+  });
+});
+
+router.get('/employees', (req, res) => {
+  Employee.find({}).then(data => {
+    console.log(data);
+    res.json(data);
+  }).catch(err => {
+    console.log(err);
+  });
+});
+
+router.post('/employees', (req, res) => {
+  console.log(req.body)
+  let employee = new Employee(req.body)
+  console.log(employee);
+  Employee.create(employee).then(employee => {
+    let employeeObj = {
+      employee: data
+    }
+    res.json(employeeObj);
+  }).catch(err => {
+    res.json(err);
+  });
+});
+
+router.get('/regulars', (req, res) => {
+  Regular.find({}).then(data => {
+    console.log(data);
+    res.json(data);
+  }).catch(err => {
+    console.log(err);
+  });
+});
+
+router.post('/regulars', (req, res) => {
+  console.log(req.body)
+  let regular = new Regular(req.body)
+  console.log(regular);
+  Regular.create(regular).then(regular => {
+    let regularObj = {
+      regular: data
+    }
+    res.json(regularObj);
   }).catch(err => {
     res.json(err);
   });

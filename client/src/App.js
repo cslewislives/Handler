@@ -9,6 +9,7 @@ import {PrivateRoute, PropsRoute, LoggedOutRoute} from './components/Routes';
 import Auth from './utils/Auth';
 import Employees from "./pages/Employees";
 import Regulars from "./pages/Regulars";
+import Add from "./pages/Add";
 
 class App extends Component {
 
@@ -33,8 +34,9 @@ class App extends Component {
       <div className='background'>
         <Router>
           <div>
-            <PrivateRoute path='/regulars' component={Regulars}/>
-            <PrivateRoute path='/employees' component={Employees}/>
+            <PrivateRoute path='/regulars' component={Regulars} type='regulars' title='Regulars'/>
+            <PrivateRoute path='/employees' component={Employees} type='employees' title='Employees'/>
+            <PrivateRoute path='/add-item' component={Add}/>
             <PrivateRoute path='/inventory' component={Inventory}/>
             <PrivateRoute path="/dashboard" component={Landing}/>
             <PropsRoute exact path="/" component={Login} toggleAuthenticateStatus={this.toggleAuthenticateStatus} />

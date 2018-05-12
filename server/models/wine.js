@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const WineSchema = new mongoose.Schema({
-    wine: {
+    item: {
         type: String,
         required: true
     },

@@ -19,26 +19,27 @@ import API from '../utils/API';
 import Auth from '../utils/Auth';
 
 class Landing extends Component {
-    state = {
-        secretData: '',
-        user: {}
+    
+    constructor(props) {
+        super(props);
+        this.child = React.createRef();
+        this.state = {
+            secretData: '',
+            user: {}
+        }
     }
+    
 
     /**
        * This method will be executed after initial rendering.
        */
-    componentDidMount() {
+    componentWillMount() {
         API
             .dashboard(Auth.getToken())
             .then(res => {
                 this.setState({secretData: res.data.message, user: res.data.user});
             })
         console.log(this.state.secretData + ' ' + this.state.user);
-    }
-
-    constructor(props) {
-        super(props);
-        this.child = React.createRef();
     }
 
     toggle = () => {
@@ -80,10 +81,10 @@ class Landing extends Component {
                 <Container>
                     <div className='card-deck'>
                         <Col md='4'>
-                            <Card className='mb-4' onClick={this.toggle}>
+                            <Card className='mb-4 landing-img' onClick={this.toggle}>
                                 <CardImage
                                     className="img-fluid"
-                                    src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20%282%29.jpg"/>
+                                    src="/assets/images/wine.jpg"/>
                                 <CardBody>
                                     <CardTitle className='text-center'>Inventory</CardTitle>
                                 </CardBody>
@@ -91,10 +92,10 @@ class Landing extends Component {
                         </Col>
                         <Col md='4'>
                             <Link to='/employees' >
-                                <Card className='mb-4'>
+                                <Card className='mb-4 landing-img'>
                                     <CardImage
                                         className="img-fluid"
-                                        src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20%282%29.jpg"/>
+                                        src="/assets/images/employees.jpg"/>
                                     <CardBody>
                                         <CardTitle className='text-center'>Employees</CardTitle>
                                     </CardBody>
@@ -103,10 +104,10 @@ class Landing extends Component {
                         </Col>
                         <Col md='4'>
                             <Link to='/regulars'>
-                                <Card className='mb-4'>
+                                <Card className='mb-4 landing-img'>
                                     <CardImage
                                         className="img-fluid"
-                                        src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20%282%29.jpg"/>
+                                        src="/assets/images/regulars.jpg"/>
                                     <CardBody>
                                         <CardTitle className='text-center'>Regulars</CardTitle>
                                     </CardBody>

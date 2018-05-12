@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const SilverSchema = new mongoose.Schema({
-    silver: {
+    item: {
         type: String,
         required: true
     },
@@ -10,7 +10,10 @@ const SilverSchema = new mongoose.Schema({
         required: true,
     },
     par: Number,
-    missing: Number
+    missing: {
+        type: Number,
+        default: 0
+    }
 }, {timestamps: true});
 
 module.exports = mongoose.model('Silverware', SilverSchema);

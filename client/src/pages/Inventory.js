@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 // import {Link, Route} from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import Glassware from './Glassware';
-import Silverware from './Silverware';
-import Wine from './Wine';
+// import Glassware from './Glassware';
+// import Silverware from './Silverware';
+// import Wine from './Wine';
 import { PrivateRoute } from '../components/Routes';
 import API from '../utils/API';
 import Auth from '../utils/Auth';
+import Items from './Items';
 
 class Inventory extends Component {
 
@@ -28,9 +29,9 @@ class Inventory extends Component {
             <div>
                 <Navbar firstName={this.state.user.firstName}/>
 
-                <PrivateRoute exact path={`${this.props.match.url}/glassware`} component={Glassware}/>
-                <PrivateRoute exact path={`${this.props.match.url}/silverware`} component={Silverware}/>
-                <PrivateRoute exact path={`${this.props.match.url}/wine`} component={Wine}/>
+                <PrivateRoute exact path={`${this.props.match.url}/glassware`} component={Items} api='glass' type='Glass' title='Glassware'/>
+                <PrivateRoute exact path={`${this.props.match.url}/silverware`} component={Items} api='silver' type='Silver' title='Silverware'/>
+                <PrivateRoute exact path={`${this.props.match.url}/wine`} component={Items} api='wine' type='Wine' title='Wine'/>
             </div>
         )
     }

@@ -3,3 +3,8 @@ body {
   background-size: cover;
   background-position: center;
 }
+
+#sign-col {
+  margin: 0 auto;
+  float: none;
+}
