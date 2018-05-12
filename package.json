@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Business Management App",
   "main": "server.js",
+  "homepage" : "https://atlantic-handler.herokuapp.com/",
   "scripts": {
     "server": "node server.js",
     "client": "cd client && npm run start",
