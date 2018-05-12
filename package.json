@@ -1,8 +1,8 @@
 {
-  "name": "react-passport-example",
+  "name": "Handler",
   "version": "1.0.0",
-  "description": "React Passport Example",
-  "main": "index.js",
+  "description": "Business Management App",
+  "main": "server.js",
   "scripts": {
     "server": "node server.js",
     "client": "cd client && npm run start",
