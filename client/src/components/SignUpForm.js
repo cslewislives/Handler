@@ -14,7 +14,7 @@ import {
 
 const SignUpForm = ({onSubmit, onChange, errors, user}) => (
   <Container>
-    <Col md='4'>
+    <Col md='4' id='signup-col'>
       <Card wide id='signup'>
         <CardImage tag='div'>
           <div className='view card-header'>
@@ -68,7 +68,7 @@ const SignUpForm = ({onSubmit, onChange, errors, user}) => (
               error={errors.password}
               value={user.password}/>
             <div className="text-center">
-              <Button type='submit'>Sign Up</Button>
+              <Button color='primary' type='submit'>Sign Up</Button>
             </div>
             <CardText>Already have an account?
               <Link to={'/login'}>Log in</Link>

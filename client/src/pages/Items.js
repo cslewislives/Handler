@@ -219,7 +219,7 @@ class Items extends Component {
     render() {
         const wine = this.props.type === 'Wine';
         return (
-            <Container>
+            <Container id='content' >
                 <ToastContainer
                     position="top-right"
                     autoClose={false}
@@ -254,15 +254,15 @@ class Items extends Component {
                         </select>}
                         <Input group label='New Total' className='col-md-5' name='total' onChange={this.handleChange}/>
                         {this.state.radio === 2 && <Input group label='New Par' className='col-md-5' name='par' onChange={this.handleChange} />}
-                        {wine ?  <Button onClick={this.onUpdate}> Update or Add </Button> : <Button onClick={this.onUpdate}>Update</Button>}
+                        {wine ?  <Button color='primary' onClick={this.onUpdate}> Update or Add </Button> : <Button color='primary' onClick={this.onUpdate}>Update</Button>}
                     </form>                   
                 </Modal>
                 <Jumbotron>
                     <h1>{this.props.title}</h1>                    
                     <hr className='my-4' />
-                    {wine ?  <Button onClick={this.toggle}> Update or Add </Button> : <Button onClick={this.toggle}>Update</Button>}
+                    {wine ?  <Button color='primary' onClick={this.toggle}> Update or Add </Button> : <Button color='primary' onClick={this.toggle}>Update</Button>}
                 </Jumbotron>
-                <Col md='6'>
+                <Col md='6' className='data-table'>
                     <ItemData
                     items={this.state.items}
                     type={this.props.type}

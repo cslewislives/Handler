@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import SignUpForm from '../components/SignUpForm';
 import API from '../utils/API';
+import {Container} from 'mdbreact';
 
 class SignUpPage extends React.Component {
   // set the initial component state

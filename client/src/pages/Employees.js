@@ -130,7 +130,7 @@ class Employees extends Component {
                         validate
                         onChange={this.handleChange}/>
                     </form>
-                    <Button onClick={this.handleUpdate}>Add</Button>
+                    <Button color='primary' onClick={this.handleUpdate}>Add</Button>
                 </Modal>
                 <Navbar color="#31334a" dark expand="md" scrolling>
                     <NavbarBrand href='/dashboard'>
@@ -146,9 +146,9 @@ class Employees extends Component {
                 <Jumbotron>
                     <h1>{this.props.title}</h1>                    
                     <hr className='my-4' />
-                    <Button onClick={this.toggle}>Add</Button>
+                    <Button color='primary' onClick={this.toggle}>Add</Button>
                 </Jumbotron>
-                <Col md='8'>
+                <Col md='8' className='data-table'>
                     <ItemData
                     items={this.state.items}
                     type={this.props.type}/>

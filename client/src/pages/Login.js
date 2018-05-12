@@ -87,7 +87,7 @@ class Login extends Component {
       <Container>
         <Row>
           <Col md='6' id='sign-col'>
-            <Card wide id='signin'>
+            <Card wide id='signin' className='d-flex h-80'>
               <CardImage tag='div'>
                 <div className='view card-header'>
                   <h2 className="h2-responsive text-center">Sign In</h2>
@@ -116,7 +116,7 @@ class Login extends Component {
                     value={this.state.user.password}
                     onChange={this.changeUser}/>
                   <div className="text-center">
-                    <Button onClick={this.processForm}>Login</Button>
+                    <Button color='primary' onClick={this.processForm}>Login</Button>
                   </div>
                 </form>
               </CardBody>
