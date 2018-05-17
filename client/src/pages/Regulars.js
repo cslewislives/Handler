@@ -1,13 +1,7 @@
 import React, {Component} from 'react';
 import {
-    Col,
     Container,
     Button,
-    Navbar,
-    NavbarBrand,
-    NavbarNav,
-    NavItem,
-    NavLink,
     Input
 } from 'mdbreact';
 import { ToastContainer, toast } from 'react-toastify';
@@ -16,28 +10,35 @@ import API from '../utils/API';
 import Auth from '../utils/Auth';
 import Jumbotron from '../components/Jumbotron';
 import ItemData from '../components/ItemData';
+import LocalNav from '../components/LocalNav';
 
 
 class Employees extends Component {
-    constructor(props) {
-        super(props);
-        this.child = React.createRef();
+   
+    child = React.createRef();
         
-        this.state = {
-            items: [],
-            update: {
-                firstName: '',
-                lastName: '',
-                email: '',
-                phone: ''
-            }
-        }
-        this.handleChange = this.handleChange.bind(this);
-
-        this.handleUpdate = this.handleUpdate.bind(this);
+    state = {
+        items: [],
+        update: {
+            firstName: '',
+            lastName: '',
+            email: '',
+            phone: ''
+        },
+        user: {}
     }
 
-    handleChange(event) {
+    componentDidMount() {
+        API
+            .dashboard(Auth.getToken())
+            .then(res => {
+                this.setState({user: res.data.user});
+            })
+        console.log(this.state.user);
+        this.loadItems();
+    }
+
+    handleChange = event => {
         const field = event.target.name;
         const update = this.state.update;
         update[field] = event.target.value;
@@ -45,7 +46,7 @@ class Employees extends Component {
         console.log(update);
     }
 
-    handleUpdate(event) {
+    handleUpdate = event => {
         event.preventDefault();        
         this.addItem();
         this.loadItems();
@@ -67,10 +68,6 @@ class Employees extends Component {
         })
     }
 
-    componentDidMount() {
-        this.loadItems();
-    }
-
     loadItems = () => {
         API
         .getItems(this.props.type, Auth.getToken())
@@ -83,6 +80,11 @@ class Employees extends Component {
 
     toggle = () => {
         this.child.current.toggle();
+    }
+
+    logout = () => {
+        // deauthenticate user
+        Auth.deauthenticateUser();
     }
 
     render() {
@@ -131,27 +133,18 @@ class Employees extends Component {
                     </form>
                     <Button color='primary' onClick={this.handleUpdate}>Add</Button>
                 </Modal>
-                <Navbar color="#31334a" dark expand="md" scrolling>
-                    <NavbarBrand href='/dashboard'>
-                        <img src='/assets/images/ATL_Logotype_Sans.svg' alt='logo' height='30'/>
-                    </NavbarBrand>
-                    <NavbarNav right>
-                        <NavItem>
-                            <NavLink to='/login' onClick={this.logout}>Logout</NavLink>
-                        </NavItem>
-                    </NavbarNav>
-                </Navbar>
+                <LocalNav firstName={this.state.user.firstName}/>
                 <Container>
-                <Jumbotron>
-                    <h1>{this.props.title}</h1>                    
-                    <hr className='my-4' />
-                    <Button color='primary' onClick={this.toggle}>Add</Button>
-                </Jumbotron>
-                <Col md='8' className='data-table'>
-                    <ItemData
-                    items={this.state.items}
-                    type={this.props.type}/>
-                </Col>
+                    <Jumbotron>
+                        <h1>{this.props.title}</h1>                    
+                        <hr className='my-4' />
+                        <Button color='primary' onClick={this.toggle}>Add</Button>
+                    </Jumbotron>
+                    <div className='row justify-content-center' >
+                        <ItemData
+                        items={this.state.items}
+                        type={this.props.type}/>
+                    </div>
                 </Container>
             </div>
         )

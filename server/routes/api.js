@@ -38,7 +38,7 @@ router.post('/glass', (req, res) => {
 router.post('/glass/:id', (req, res) => {
   let id = req.params.id;
   console.log(req.body);
-  Glass.findOneAndUpdate({item: id}, {total: req.body.total}).then(glass => {
+  Glass.findOneAndUpdate({item: id}, {totalDay: req.body.total}).then(glass => {
     res.json(glass)
   }).catch(err => {
     res.json(err);
@@ -48,7 +48,7 @@ router.post('/glass/:id', (req, res) => {
 router.post('/glass/:id/par', (req, res) => {
   let id = req.params.id;
   console.log(req.body);
-  Glass.findOneAndUpdate({item: id}, {par: req.body.par}).then(glass => {
+  Glass.findOneAndUpdate({item: id}, {parDay: req.body.par}).then(glass => {
     res.json(glass)
   }).catch(err => {
     res.json(err);
@@ -81,7 +81,7 @@ router.post('/silver', (req, res) => {
 router.post('/silver/:id', (req, res) => {
   let id = req.params.id;
   console.log(req.body);
-  Silverware.findOneAndUpdate({item: id}, {total: req.body.total}).then(silver => {
+  Silverware.findOneAndUpdate({item: id}, {totalDay: req.body.total}).then(silver => {
     res.json(silver)
   }).catch(err => {
     res.json(err);
@@ -91,7 +91,7 @@ router.post('/silver/:id', (req, res) => {
 router.post('/silver/:id/par', (req, res) => {
   let id = req.params.id;
   console.log(req.body);
-  Silverware.findOneAndUpdate({item: id}, {par: req.body.par}).then(item => {
+  Silverware.findOneAndUpdate({item: id}, {parDay: req.body.par}).then(item => {
     res.json(item)
   }).catch(err => {
     res.json(err);

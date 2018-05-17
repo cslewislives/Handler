@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import Modal from '../components/Modal';
 import Jumbotron from '../components/Jumbotron';
 import {
-    Col,
     Container,
     Button,
     Input
@@ -16,33 +15,22 @@ import axios from 'axios';
 
 class Items extends Component {
 
-    constructor(props) {
-        super(props);
-        this.child = React.createRef();
-        
-        this.state = {
-            items: [],
-            update: {
-                item: '',
-                total: '',
-                par: '',
-                distributor: '',
-                wine: '',
-            },
-            radio: 2,
-            order: []
-        }
-        this.handleChange = this.handleChange.bind(this);
-
-        this.handleUpdate = this.handleUpdate.bind(this);
-
-        this.onUpdate = this.onUpdate.bind(this);
-
-        this.radioClick1 = this.radioClick1.bind(this);
-        this.radioClick2 = this.radioClick2.bind(this);
+    child = React.createRef();
+    
+    state = {
+        items: [],
+        update: {
+            item: '',
+            total: '',
+            par: '',
+            distributor: '',
+            wine: '',
+        },
+        radio: 2,
+        order: []
     }
 
-    handleChange(event) {
+    handleChange = event => {
         const field = event.target.name;
         const update = this.state.update;
         update[field] = event.target.value;
@@ -50,7 +38,7 @@ class Items extends Component {
         console.log(update);
     }
 
-    handleUpdate(event) {
+    handleUpdate = event => {
         event.preventDefault();
         if (!this.state.update.item) {
             toast.error(`Please choose a ${this.props.type} to update!`, {
@@ -76,18 +64,19 @@ class Items extends Component {
             console.log('called all');
             axios.all([this.updateTotal(), this.updatePar()]);
             this.loadItems();
-            this.toggle();           
+            this.toggle();        
         } else if (this.state.radio === 1) {
             this.addItem();
             this.loadItems();
-            this.toggle(); 
+            this.toggle();
         }
     }
 
     updatePar = () => {
         const token = Auth.getToken();
         API.updateItemPar(this.props.api, this.state.update, token).then((res, err) => {
-            toast.success(`The par for ${res.data.item} has been updated`, {
+            if (err) throw err;
+            toast.success(`The daily par for ${res.data.item} has been updated`, {
                 position: "top-center",
                 autoClose: 3000,
                 hideProgressBar: true,
@@ -102,6 +91,7 @@ class Items extends Component {
         const token = Auth.getToken();
         API.updateItem(this.props.api, this.state.update, token).then((res, err) => {
             console.log(res);
+            if (err) throw err;
             toast.success(`The total for ${res.data.item} has been updated`, {
                 position: "top-center",
                 autoClose: 3000,
@@ -117,6 +107,7 @@ class Items extends Component {
     addItem = () => {
         const token = Auth.getToken();        
         API.addItem(this.props.api, this.state.update, token).then((res, err) => {
+            if (err) throw err;
             toast.success(`New ${this.props.type} added!`, {
                 position: "top-center",
                 autoClose: 3000,
@@ -144,20 +135,60 @@ class Items extends Component {
     };
 
     calculateMissing = () => {
+        let type = this.props.type;
+        this.calculateParTurn();
+        this.calculateTotalTurn();
+        if (type === 'Wine') {
+            this.state.items.map((item, i) => {
+                let state = this.state.items;
+                let missing = item.par - item.total;
+                console.log(missing);
+                if (missing < 0) {
+                    missing = 0;
+                    state[i].missing = missing;
+                    this.setState({items: state});
+                } else {
+                    state[i].missing = missing;
+                    this.setState({items: state});
+                }
+            })
+        } else {
+            this.state.items.map((item, i) => {
+                let state = this.state.items;
+                let missing = item.parTurn - item.totalTurn;
+                console.log(missing);
+                if (missing < 0) {
+                    missing = 0;
+                    state[i].missing = missing;
+                    this.setState({items: state});
+                } else {
+                    state[i].missing = missing;
+                    this.setState({items: state});
+                }
+            })
+
+        }
+        this.mustOrder();        
+    }
+
+    calculateParTurn = () => {
         this.state.items.map((item, i) => {
             let state = this.state.items;
-            let missing = item.par - item.total;
-            console.log(missing);
-            if (missing < 0) {
-                missing = 0;
-                state[i].missing = missing;
-                this.setState({items: state});
-            } else {
-                state[i].missing = missing;
-                this.setState({items: state});
-            }
-        })
-        this.mustOrder();        
+            let turn = Math.round(item.parDay/4.5);
+            console.log(turn);
+            state[i].parTurn = turn;
+            this.setState({parTurn: state});
+        });
+    }
+
+    calculateTotalTurn = () => {
+        this.state.items.map((item, i) => {
+            let state = this.state.items;
+            let turn = Math.round(item.totalDay/4.5);
+            console.log(turn);
+            state[i].totalTurn = turn;
+            this.setState({totalTurn: state});
+        });
     }
 
 
@@ -200,17 +231,17 @@ class Items extends Component {
         });
     }
 
-    onUpdate(event) {
+    onUpdate = event => {
         toast.dismiss();
         this.handleUpdate(event);
     }
 
-    radioClick1() {
+    radioClick1 = () => {
         this.setState({radio: 1});
         console.log(this.state.radio);
     }
 
-    radioClick2() {
+    radioClick2 = () => {
         this.setState({radio: 2});
         console.log(this.state.radio);
     }
@@ -262,12 +293,12 @@ class Items extends Component {
                     <hr className='my-4' />
                     {wine ?  <Button color='primary' onClick={this.toggle}> Update or Add </Button> : <Button color='primary' onClick={this.toggle}>Update</Button>}
                 </Jumbotron>
-                <Col md='6' className='data-table'>
+                <div className='row justify-content-center' >
                     <ItemData
                     items={this.state.items}
                     type={this.props.type}
                     distributor={wine ? true : false}/>
-                </Col>
+                </div>
             </Container>
         );
     }

@@ -2,11 +2,6 @@ import React, {Component} from 'react';
 import {
     Container,
     Col,
-    Navbar,
-    NavbarBrand,
-    NavbarNav,
-    NavItem,
-    NavLink,
     Card,
     CardBody,
     CardTitle,
@@ -17,18 +12,16 @@ import Modal from '../components/Modal';
 import {Link} from 'react-router-dom';
 import API from '../utils/API';
 import Auth from '../utils/Auth';
+import LocalNav from '../components/LocalNav';
 
 class Landing extends Component {
-    
-    constructor(props) {
-        super(props);
-        this.child = React.createRef();
-        this.state = {
-            secretData: '',
-            user: {}
-        }
+
+    child = React.createRef();
+    state = {
+        secretData: '',
+        user: {}
     }
-    
+
 
     /**
        * This method will be executed after initial rendering.
@@ -58,28 +51,27 @@ class Landing extends Component {
         return (
             <div>
                 <Modal ref={this.child} title='Choose Inventory'>
-                    <Link to='/inventory/glassware'>
-                        <Button color="primary" onClick={this.toggle}>Glassware</Button>
-                    </Link>
-                    <Link to='/inventory/silverware'>
-                        <Button color="primary" onClick={this.toggle}>Silverware</Button>
-                    </Link>
-                    <Link to='/inventory/wine'>
-                        <Button color="primary" onClick={this.toggle}>Wine</Button>
-                    </Link>
+                    <div className='row justify-content-center' >
+                        <Link to='/inventory/glassware'>
+                            <Col>
+                                <Button color="primary" onClick={this.toggle}>Glassware</Button>
+                            </Col>
+                        </Link>
+                        <Link to='/inventory/silverware'>
+                            <Col>
+                                <Button color="primary" onClick={this.toggle}>Silverware</Button>
+                            </Col>
+                        </Link>
+                        <Link to='/inventory/wine'>
+                            <Col>
+                                <Button color="primary" onClick={this.toggle}>Wine</Button>
+                            </Col>
+                        </Link>
+                    </div>
                 </Modal>
-                <Navbar color="#31334a" dark expand="md" scrolling>
-                    <NavbarBrand href='/dashboard'>
-                        <img src='/assets/images/ATL_Logotype_Sans.svg' alt='logo' height='30'/>
-                    </NavbarBrand>
-                    <NavbarNav right>
-                        <NavItem>
-                            <NavLink to='/login' onClick={this.logout}>Logout: {this.state.user.firstName}</NavLink>
-                        </NavItem>
-                    </NavbarNav>
-                </Navbar>
-                <Container>
-                    <div className='card-deck'>
+                <LocalNav firstName={this.state.user.firstName}/>
+                <Container id='dash-btn'>
+                    <div className='row justify-content-center' >
                         <Col md='4'>
                             <Card className='mb-4 landing-img' onClick={this.toggle}>
                                 <CardImage

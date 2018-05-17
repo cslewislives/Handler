@@ -1,18 +1,9 @@
 import React, {Component} from 'react';
 // import {Link} from "react-router-dom";
-import {
-  Col,
-  Container,
-  Input,
-  Card,
-  Button,
-  CardBody,
-  CardImage,
-  Row
-} from 'mdbreact';
 import PropTypes from 'prop-types';
 import Auth from '../utils/Auth';
 import API from '../utils/API';
+import LoginForm from '../components/LoginForm';
 
 class Login extends Component {
   state = {
@@ -79,51 +70,17 @@ class Login extends Component {
     user[field] = event.target.value;
 
     this.setState({user});
-    console.log(user);
   }
 
   render() {
     return (
-      <Container>
-        <Row>
-          <Col md='6' id='sign-col'>
-            <Card wide id='signin' className='d-flex h-80'>
-              <CardImage tag='div'>
-                <div className='view card-header'>
-                  <h2 className="h2-responsive text-center">Sign In</h2>
-                </div>
-              </CardImage>
-              <CardBody>
-                <form>
-                  <Input
-                    label="Username"
-                    name="username"
-                    icon="user"
-                    group
-                    type="text"
-                    validate
-                    error="wrong"
-                    success="right"
-                    value={this.state.user.username}
-                    onChange={this.changeUser}/>
-                  <Input
-                    label="Password"
-                    icon="lock"
-                    group
-                    type="password"
-                    name="password"
-                    validate
-                    value={this.state.user.password}
-                    onChange={this.changeUser}/>
-                  <div className="text-center">
-                    <Button color='primary' onClick={this.processForm}>Login</Button>
-                  </div>
-                </form>
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
+      <LoginForm
+        onSubmit={this.processForm}
+        onChange={this.changeUser}
+        errors={this.state.errors}
+        successMessage={this.state.successMessage}
+        user={this.state.user}
+      />
     )
   }
 };

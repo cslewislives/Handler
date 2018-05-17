@@ -5,27 +5,18 @@ import Auth from '../utils/Auth';
 import { ToastContainer, toast } from 'react-toastify';
 
 class Add extends Component {
-
-    constructor(props) {
-        super(props);
         
-        this.state = {
-            item: '',
-            total: '',
-            par: ''
-        }
-
-        this.handleChange = this.handleChange.bind(this);
-
-        this.addGlass = this.addGlass.bind(this);
-        this.addSilver = this.addSilver.bind(this);
+    state = {
+        item: '',
+        totalDay: '',
+        parDay: ''
     }
 
-    handleChange(event) {
+    handleChange = event => {
         const field = event.target.name;
         const state = this.state;
         state[field] = event.target.value;
-        this.setState({state});
+        this.setState(state);
         console.log(state);
     }
 
@@ -43,12 +34,12 @@ class Add extends Component {
         })
     }
 
-    addGlass(event) {
+    addGlass = event => {
         event.preventDefault();
         this.addItem('glass', 'Glass');
     }
 
-    addSilver(event) {
+    addSilver = event => {
         event.preventDefault();
         this.addItem('silver', 'Silver');
     }
@@ -67,8 +58,8 @@ class Add extends Component {
                 />
                 <form>
                     <Input group label='Item' className='col-md-5' name='item' onChange={this.handleChange}/>
-                    <Input group label='Total' className='col-md-5' name='total' onChange={this.handleChange}/>
-                    <Input group label='Par' className='col-md-5' name='par' onChange={this.handleChange}/>
+                    <Input group label='Total Per Day' className='col-md-5' name='totalDay' onChange={this.handleChange}/>
+                    <Input group label='Par Per Day' className='col-md-5' name='parDay' onChange={this.handleChange}/>
                     <Button onClick={this.addGlass}> Add Glass </Button>
                     <Button onClick={this.addSilver}> Add Silver </Button>
                 </form>

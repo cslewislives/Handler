@@ -2,18 +2,12 @@ import React, {Component} from 'react';
 import {Modal, ModalBody, ModalHeader} from 'mdbreact';
 
 class ModalPage extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
+    
+    state = {
             modal: false
         };
 
-        this.toggle = this
-            .toggle
-            .bind(this);
-    }
-
-    toggle() {
+    toggle= () => {
         this.setState({
             modal: !this.state.modal
         });

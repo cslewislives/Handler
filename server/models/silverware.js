@@ -5,11 +5,19 @@ const SilverSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    total: {
+    totalDay: {
         type: Number,
         required: true,
     },
-    par: Number,
+    totalTurn: {
+        type: Number,
+        default: 0
+    },
+    parDay: Number,
+    parTurn: {
+        type: Number,
+        default: 0
+    },
     missing: {
         type: Number,
         default: 0

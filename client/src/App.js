@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import "./App.css";
 import {BrowserRouter as Router} from 'react-router-dom';
-import Login from './pages/Login';
+import Login from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
 import Landing from './pages/Landing';
 import Inventory from './pages/Inventory';
