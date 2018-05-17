@@ -53,21 +53,25 @@ class Items extends Component {
         else if (this.state.update.total && !this.state.update.par && this.state.radio === 2) {
             this.updateTotal();
             this.loadItems();
+            this.resetUpdate();
             this.toggle();
         } 
         else if (this.state.update.par && !this.state.update.total && this.state.radio === 2) {
             this.updatePar();
             this.loadItems();
+            this.resetUpdate();
             this.toggle();
         } 
         else if (this.state.update.total && this.state.update.par && this.state.radio === 2) {
             // console.log('called all');
             axios.all([this.updateTotal(), this.updatePar()]);
             this.loadItems();
+            this.resetUpdate();
             this.toggle();        
         } else if (this.state.radio === 1) {
             this.addItem();
             this.loadItems();
+            this.resetUpdate();
             this.toggle();
         }
     }
@@ -218,6 +222,18 @@ class Items extends Component {
     
     toggle = () => {
         this.child.current.toggle();
+    }
+
+    resetUpdate = () => {
+        let update = this.state.update;
+        update = {
+            item: '',
+            total: '',
+            par: '',
+            distributor: '',
+            wine: '',
+        }
+        this.setState({update});
     }
 
     addAlert = message => {
