@@ -2,6 +2,10 @@ body {
   background: url('/assets/images/AtlanticLogo.svg');
   background-size: cover;
   background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  height: 100vh;
+  font-family: 'sofia_proregular', sans-serif;
 }
 
 #sign-col {
@@ -48,4 +52,22 @@ body {
 
 .error-message {
   color: red;
+}
+
+@font-face {
+  font-family: 'atlanticregular';
+  src: url('/assets/fonts/atlantic-regular-webfont.woff2') format('woff2'),
+       url('/assets/fonts/atlantic-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+@font-face {
+  font-family: 'sofia_proregular';
+  src: url('/assets/fonts/sofia_pro_regular_thefontsmaster.com-webfont.woff2') format('woff2'),
+       url('/assets/fonts/sofia_pro_regular_thefontsmaster.com-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
 }
