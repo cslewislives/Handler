@@ -17,7 +17,7 @@ class Add extends Component {
         const state = this.state;
         state[field] = event.target.value;
         this.setState(state);
-        console.log(state);
+        // console.log(state);
     }
 
     addItem = (route, type) => {

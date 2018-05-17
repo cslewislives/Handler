@@ -28,7 +28,7 @@ class LocalNav extends Component {
     }
 
     renderNavItems = () => {
-        console.log(window.location.pathname);
+        // console.log(window.location.pathname);
         switch (window.location.pathname) {
             case '/dashboard':
                 ''

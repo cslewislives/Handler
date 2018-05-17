@@ -35,7 +35,7 @@ class Items extends Component {
         const update = this.state.update;
         update[field] = event.target.value;
         this.setState({update});
-        console.log(update);
+        // console.log(update);
     }
 
     handleUpdate = event => {
@@ -61,7 +61,7 @@ class Items extends Component {
             this.toggle();
         } 
         else if (this.state.update.total && this.state.update.par && this.state.radio === 2) {
-            console.log('called all');
+            // console.log('called all');
             axios.all([this.updateTotal(), this.updatePar()]);
             this.loadItems();
             this.toggle();        
@@ -90,7 +90,7 @@ class Items extends Component {
     updateTotal = () => {
         const token = Auth.getToken();
         API.updateItem(this.props.api, this.state.update, token).then((res, err) => {
-            console.log(res);
+            // console.log(res);
             if (err) throw err;
             toast.success(`The total for ${res.data.item} has been updated`, {
                 position: "top-center",
@@ -128,9 +128,9 @@ class Items extends Component {
         .getItems(this.props.api, Auth.getToken())
         .then(res => {
             this.setState({items: res.data});
-            console.log(this.state.items);
+            // console.log(this.state.items);
             this.calculateMissing();
-            console.log(this.state.items);
+            // console.log(this.state.items);
         });
     };
 
@@ -142,7 +142,7 @@ class Items extends Component {
             this.state.items.map((item, i) => {
                 let state = this.state.items;
                 let missing = item.par - item.total;
-                console.log(missing);
+                // console.log(missing);
                 if (missing < 0) {
                     missing = 0;
                     state[i].missing = missing;
@@ -156,7 +156,7 @@ class Items extends Component {
             this.state.items.map((item, i) => {
                 let state = this.state.items;
                 let missing = item.parTurn - item.totalTurn;
-                console.log(missing);
+                // console.log(missing);
                 if (missing < 0) {
                     missing = 0;
                     state[i].missing = missing;
@@ -175,7 +175,7 @@ class Items extends Component {
         this.state.items.map((item, i) => {
             let state = this.state.items;
             let turn = Math.round(item.parDay/4.5);
-            console.log(turn);
+            // console.log(turn);
             state[i].parTurn = turn;
             this.setState({parTurn: state});
         });
@@ -185,7 +185,7 @@ class Items extends Component {
         this.state.items.map((item, i) => {
             let state = this.state.items;
             let turn = Math.round(item.totalDay/4.5);
-            console.log(turn);
+            // console.log(turn);
             state[i].totalTurn = turn;
             this.setState({totalTurn: state});
         });
@@ -198,9 +198,9 @@ class Items extends Component {
                 let mustOrder = this.state.items.filter(item => item.missing >= 24);
                 mustOrder.map(item => {
                     let rounded = 24 * Math.round(item.missing/24);
-                    console.log('rounded: ', rounded);
+                    // console.log('rounded: ', rounded);
                     let cases = rounded/24;
-                    console.log('cases: ', cases);
+                    // console.log('cases: ', cases);
                     this.addAlert(`Must order ${cases} cases of ${item.item} glasses!`)
                 })
             break;
@@ -238,12 +238,12 @@ class Items extends Component {
 
     radioClick1 = () => {
         this.setState({radio: 1});
-        console.log(this.state.radio);
+        // console.log(this.state.radio);
     }
 
     radioClick2 = () => {
         this.setState({radio: 2});
-        console.log(this.state.radio);
+        // console.log(this.state.radio);
     }
 
 

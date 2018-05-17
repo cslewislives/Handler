@@ -35,7 +35,7 @@ class Employees extends Component {
             .then(res => {
                 this.setState({user: res.data.user});
             })
-        console.log(this.state.user);
+        // console.log(this.state.user);
         this.loadItems();
     }
 
@@ -44,7 +44,7 @@ class Employees extends Component {
         const update = this.state.update;
         update[field] = event.target.value;
         this.setState({update});
-        console.log(update);
+        // console.log(update);
     }
 
     handleUpdate = event => {
@@ -73,9 +73,9 @@ class Employees extends Component {
         API
         .getItems(this.props.type, Auth.getToken())
         .then(res => {
-            console.log(res);
+            // console.log(res);
             this.setState({items: res.data});
-            console.log(this.state.items);
+            // console.log(this.state.items);
         });
     };
 

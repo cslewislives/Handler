@@ -13,6 +13,7 @@ import {Link} from 'react-router-dom';
 import API from '../utils/API';
 import Auth from '../utils/Auth';
 import LocalNav from '../components/LocalNav';
+import Column from '../components/Column';
 
 class Landing extends Component {
 
@@ -32,7 +33,7 @@ class Landing extends Component {
             .then(res => {
                 this.setState({secretData: res.data.message, user: res.data.user});
             })
-        console.log(this.state.secretData + ' ' + this.state.user);
+        // console.log(this.state.secretData + ' ' + this.state.user);
     }
 
     toggle = () => {
@@ -71,8 +72,8 @@ class Landing extends Component {
                 </Modal>
                 <LocalNav firstName={this.state.user.firstName}/>
                 <Container id='dash-btn'>
-                    <div className='row justify-content-center' >
-                        <Col md='4'>
+                    <div className='row' >
+                        <Column size='md-4'>
                             <Card className='mb-4 landing-img' onClick={this.toggle}>
                                 <CardImage
                                     className="img-fluid dash-img"
@@ -81,8 +82,8 @@ class Landing extends Component {
                                     <CardTitle className='text-center' style={{ color: 'tomato', cursor: 'pointer' }}>Inventory</CardTitle>
                                 </CardBody>
                             </Card>
-                        </Col>
-                        <Col md='4'>
+                        </Column>
+                        <Column size='md-4'>
                             <Link to='/employees' style={{ color: 'tomato' }}>
                                 <Card className='mb-4 landing-img'>
                                     <CardImage
@@ -93,8 +94,8 @@ class Landing extends Component {
                                     </CardBody>
                                 </Card>
                             </Link>
-                        </Col>
-                        <Col md='4'>
+                        </Column>
+                        <Column size='md-4'>
                             <Link to='/regulars' style={{ color: 'tomato' }}>
                                 <Card className='mb-4 landing-img'>
                                     <CardImage
@@ -105,7 +106,7 @@ class Landing extends Component {
                                     </CardBody>
                                 </Card>
                             </Link>
-                        </Col>
+                        </Column>
                     </div>
                 </Container>
             </div>

@@ -21,7 +21,7 @@ class Inventory extends Component {
             .then(res => {
                 this.setState({user: res.data.user});
             })
-        console.log(this.state.user);
+        // console.log(this.state.user);
     }
 
     render() {
