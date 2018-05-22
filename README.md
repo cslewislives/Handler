@@ -3,7 +3,7 @@ Business management App for Atlantic - a neighborhood eatery in Savannha, GA. In
 
 ## Getting Started
 
-Intended as an intranet app for a local business. To see use as a base please fork and yarn add the necessary modules
+Intended as an intranet app for a local business. To use as a base please fork and yarn add the necessary modules
 
 ### Prerequisites
 
@@ -19,9 +19,6 @@ Yarn or npm in order to get the necessary modules.
 * [Passport](http://www.passportjs.org/) - User Auth
 
 
-## Site Preview
-
-
 ## Contributing
 
 Please feel free to branch off and make some tweaks and make a PR. We're open to any cool suggestions!
@@ -29,6 +26,7 @@ Please feel free to branch off and make some tweaks and make a PR. We're open to
 ## Future Development
 
 * Continual additions of asked for features from business owner such as: food costs, emailing functionality etc.
+* Cleaner code and better logic
 * User 'modes' for managers and employees
 
 ## Authors
