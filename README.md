@@ -1,5 +1,5 @@
 # Handler
-Business management App for Atlantic - a neighborhood eatery in Savannha, GA. Intended as a place where managers can see everything they need concerning the business in one place. Continual development to add more important business features such as costs and scheduling
+Business management App for Atlantic - a neighborhood eatery in Savannah, GA. Intended as a place where managers can see everything they need concerning the business in one place. Continual development to add more important business features such as costs and scheduling
 
 ## Getting Started
 
